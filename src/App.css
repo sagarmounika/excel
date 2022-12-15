@@ -1,5 +1,8 @@
 .App {
   text-align: center;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 
 .App-logo {
@@ -32,7 +35,80 @@
   from {
     transform: rotate(0deg);
   }
+
   to {
     transform: rotate(360deg);
   }
+}
+
+.container2 {
+  box-sizing: border-box;
+  padding: 2%;
+  width: 100%;
+  background-color: #e9e9e9;
+  width: 100vw;
+  overflow-x: hidden;
+  height: 100vh;
+}
+
+.form {
+  /* width: 60%;
+  margin-left: 20%; */
+  box-sizing: border-box;
+}
+
+.form-group {
+
+  /* padding: 3%; */
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: space-between;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.table-responsive-xl {
+  /* overflow-x: hidden !important; */
+  background-color: rgb(238, 247, 255);
+
+}
+
+.label {
+  /* text-align: center; */
+  width: 100%;
+  margin-bottom: 2%;
+  font-size: 1.1em;
+  font-weight: 500;
+}
+
+.form-control {
+  width: 30% !important;
+  box-sizing: border-box;
+
+}
+
+.btn-submit {
+  margin-top: 2%;
+  /* width: 20%; */
+
+
+}
+
+.btn-download {
+  margin-bottom: 2%;
+}
+
+.table-responsive-xl input {
+  border: none;
+  width: 100%;
+  outline: none;
+
+  background-color: transparent;
+}
+
+.table-responsive-xl input:focus {
+
+  background-color: field;
 }

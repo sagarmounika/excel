@@ -4,7 +4,7 @@ export const IndividualData = ({ individualExcelData, columns, index, updateHand
     return (
         <>
             {columns.map((name) =>
-                <th>
+                <td>
                     <input
                         type="text" value={
                             typeof individualExcelData[name] === "number" ?
@@ -14,7 +14,7 @@ export const IndividualData = ({ individualExcelData, columns, index, updateHand
                         onChange={(e) => updateHandler(e, name, index)}
                         name={name}
                     />
-                </th>)}
+                </td>)}
 
         </>
     )
