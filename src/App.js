@@ -7,26 +7,36 @@ import Table from "react-bootstrap/Table"
 import { FaCloudDownloadAlt } from "react-icons/fa"
 import { BsArrowBarRight } from "react-icons/bs"
 import "./style.css"
+import Papa from "papaparse";
 const Table2Excel = window.Table2Excel
 
 function App() {
   const [excelFile, setExcelFile] = useState(null)
   const [excelFileError, setExcelFileError] = useState(null)
   const [fileName, setFileName] = useState("")
+  const [isCsv, setIsCsv] = useState(false)
   const [excelData, setExcelData] = useState(null)
 
   const fileType = [
     "application/vnd.ms-excel",
     "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    "text/csv"
   ]
   // handle file
   const handleFile = e => {
     let selectedFile = e.target.files[0]
     let fileName = e.target.files[0].name
+    console.log(selectedFile, "selectedFile")
     if (selectedFile) {
-      if (selectedFile && fileType.includes(selectedFile.type)) {
+      if (selectedFile.type == "text/csv") {
+        setExcelFileError(null)
+        setExcelFile(selectedFile)
+        setFileName(fileName)
+        setIsCsv(true)
+      } else if (selectedFile && fileType.includes(selectedFile.type)) {
         let reader = new FileReader()
         reader.readAsArrayBuffer(selectedFile)
+        setIsCsv(false)
         reader.onload = e => {
           setExcelFileError(null)
           setExcelFile(e.target.result)
@@ -47,11 +57,24 @@ function App() {
   // submit function
   const handleSubmit = () => {
     if (excelFile !== null) {
-      const workbook = XLSX.read(excelFile, { type: "buffer" })
-      const worksheetName = workbook.SheetNames[0]
-      const worksheet = workbook.Sheets[worksheetName]
-      const data = XLSX.utils.sheet_to_json(worksheet)
-      setExcelData(data)
+      if (isCsv) {
+        Papa.parse(excelFile, {
+          header: true,
+          skipEmptyLines: true,
+          complete: function (results) {
+            setExcelData(results.data)
+            console.log(results.data)
+          },
+        });
+      }
+      else {
+        const workbook = XLSX.read(excelFile, { type: "buffer" })
+        const worksheetName = workbook.SheetNames[0]
+        const worksheet = workbook.Sheets[worksheetName]
+        const data = XLSX.utils.sheet_to_json(worksheet)
+        setExcelData(data)
+      }
+
     } else {
       setExcelData(null)
     }
